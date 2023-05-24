@@ -6,6 +6,7 @@ pool:
 
 variables:
   advancedsecurity.codeql.querysuite: security-extended
+  advancedsecurity.codeql.language: javascript
   advancedsecurity.submittoadvancedsecurity: true
   
 
