@@ -33,13 +33,15 @@ app.get('/', (req, res) => {
 
 // Route - user search
 app.get("/users", function (req, res) {
-  let search = "%";
+  let search = "";
 
-  if (req?.params?.q) {
-    search = req.params.q;
+  if (req?.query?.q) {
+    search = req.query.q;
+    console.log('q =' + search);
   }
 
-  const squery = `SELECT * FROM users WHERE name LIKE '${search}';`
+  const squery = `SELECT * FROM users WHERE name = '${search}';`
+  console.log('squery = ' + squery);
   pool.query(squery, (err, results) => {
     if (err) {
       console.log(err, results)
