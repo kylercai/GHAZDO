@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   res.status(200).send(JSON.stringify({ name: version.getName(), version: version.getVersion() }));
 });
 
-// Route - user search
+// Route - user search - with sql injection vulnerability
 app.get("/users", function (req, res) {
   let search = "";
 
@@ -47,7 +47,29 @@ app.get("/users", function (req, res) {
       console.log(err, results)
     }
     else {
-      res.send(results.rows)
+      //res.send(results.rows)
+      res.send(printResult(results));
+    }
+  });
+});
+
+// Route - user search - with sql injection fix
+app.get("/users/v2", function (req, res) {
+  let search = "";
+
+  if (req?.query?.q) {
+    search = req.query.q;
+    console.log('q =' + search);
+  }
+
+  const squery = 'SELECT * FROM users WHERE name = $1;';
+  pool.query(squery, [search], (err, results) => {
+    if (err) {
+      console.log(err, results)
+    }
+    else {
+      //res.send(results.rows)
+      res.send(printResult(results));
     }
   });
 });
@@ -56,3 +78,17 @@ app.get("/users", function (req, res) {
 app.listen(port, () => {
   console.log(`Express app up and running on http://localhost:${port}`);
 })
+
+function printResult(results) {
+  let html = '<table border="1"><tr><th>id</th><th>name</th><th>address</th><th>phone</th></tr>';
+  for (let row of results.rows) {
+    html += '<tr>';
+    html += '<td>' + row.id + '</td>';
+    html += '<td>' + row.name + '</td>';
+    html += '<td>' + row.address + '</td>';
+    html += '<td>' + row.phone + '</td>';
+    html += '</tr>';
+  }
+  html += '</table>';
+  return html;
+}
