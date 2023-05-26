@@ -28,7 +28,18 @@ const port = process.env.PORT || 8080;
 
 // Route - default
 app.get('/', (req, res) => {
-  res.status(200).send(JSON.stringify({ name: version.getName(), version: version.getVersion() }));
+  //res.status(200).send(JSON.stringify({ name: version.getName(), version: version.getVersion() }));
+
+  //提供一个输入框，输入用户名
+  //获取用户名后，调用 /users 接口，获取用户信息
+  //显示用户信息
+  //按照以上步骤，生成code
+  res.send(`
+  <form action="/users" method="get">
+    <input type="text" name="q" />
+    <input type="submit" value="Submit" />
+  </form>
+  `);
 });
 
 // Route - user search - with sql injection vulnerability
