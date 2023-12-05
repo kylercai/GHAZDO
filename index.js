@@ -65,32 +65,33 @@ app.get("/users", function (req, res) {
 });
 
 // Route - user search - with sql injection fix
-app.get("/users/v2", function (req, res) {
-  let search = "";
+// app.get("/users/v2", function (req, res) {
+//   let search = "";
 
-  if (req?.query?.q) {
-    search = req.query.q;
-    console.log('q =' + search);
-  }
+//   if (req?.query?.q) {
+//     search = req.query.q;
+//     console.log('q =' + search);
+//   }
 
-  const squery = 'SELECT * FROM users WHERE name = $1;';
-  pool.query(squery, [search], (err, results) => {
-    if (err) {
-      console.log(err, results)
-    }
-    else {
-      //res.send(results.rows)
-      res.send(printResult(results));
-    }
-  });
-});
+//   const squery = 'SELECT * FROM users WHERE name = $1;';
+//   console.log('squery = ' + squery);
+//   pool.query(squery, [search], (err, results) => {
+//     if (err) {
+//       console.log(err, results)
+//     }
+//     else {
+//       //res.send(results.rows)
+//       res.send(printResult(results, 'squery = ' + squery));
+//     }
+//   });
+// });
 
 // Start the server
 app.listen(port, () => {
   console.log(`Express app up and running on http://localhost:${port}`);
 })
 
-function printResult(results) {
+function printResult(results, squeryinfo) {
   let html = '<table border="1"><tr><th>id</th><th>name</th><th>address</th><th>phone</th></tr>';
   for (let row of results.rows) {
     html += '<tr>';
@@ -101,5 +102,9 @@ function printResult(results) {
     html += '</tr>';
   }
   html += '</table>';
+
+  // 在html中再打印传入参数squeryinfo
+  html += '<br>' + squeryinfo + '<br>';
+
   return html;
 }
