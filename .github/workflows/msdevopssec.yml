@@ -21,8 +21,6 @@ jobs:
     - name: Run Microsoft Security DevOps Analysis
       uses: microsoft/security-devops-action@latest
       id: msdo
-      with:
-        tools: 'bandit', 'binskim', 'eslint', 'templateanalyzer', 'terrascan', 'trivy'
 
       # Upload alerts to the Security tab
     - name: Upload alerts to Security tab
