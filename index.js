@@ -67,26 +67,26 @@ app.get("/users", function (req, res) {
 });
 
 //Route - user search - with sql injection fix
-app.get("/users/v2", function (req, res) {
-  let search = "";
+// app.get("/users/v2", function (req, res) {
+//   let search = "";
 
-  if (req?.query?.q) {
-    search = req.query.q;
-    console.log('q =' + search);
-  }
+//   if (req?.query?.q) {
+//     search = req.query.q;
+//     console.log('q =' + search);
+//   }
 
-  const squery = 'SELECT * FROM users WHERE name = $1;';
-  console.log('squery = ' + squery);
-  pool.query(squery, [search], (err, results) => {
-    if (err) {
-      console.log(err, results)
-    }
-    else {
-      //res.send(results.rows)
-      res.send(printResult(results, 'squery = ' + squery));
-    }
-  });
-});
+//   const squery = 'SELECT * FROM users WHERE name = $1;';
+//   console.log('squery = ' + squery);
+//   pool.query(squery, [search], (err, results) => {
+//     if (err) {
+//       console.log(err, results)
+//     }
+//     else {
+//       //res.send(results.rows)
+//       res.send(printResult(results, 'squery = ' + squery));
+//     }
+//   });
+// });
 
 // Start the server
 app.listen(port, () => {
