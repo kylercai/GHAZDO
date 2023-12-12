@@ -66,6 +66,7 @@ app.get("/users", function (req, res) {
   });
 });
 
+
 //Route - user search - with sql injection fix
 // app.get("/users/v2", function (req, res) {
 //   let search = "";
