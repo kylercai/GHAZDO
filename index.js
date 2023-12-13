@@ -53,7 +53,6 @@ app.get("/users", function (req, res) {
     console.log('q =' + search);
   }
 
-
   const squery = `SELECT * FROM users WHERE name = '${search}';`
   console.log('squery = ' + squery);
   pool.query(squery, (err, results) => {
