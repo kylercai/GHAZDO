@@ -18,5 +18,9 @@
   },
   "[xml]": {
     "editor.tabSize": 4
-  }
+  },
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ]
 }
